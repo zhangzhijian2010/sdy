@@ -1,0 +1,22 @@
+spring:
+  profiles:
+    # dev, pro
+    active: dev
+  data:
+    elasticsearch:
+      properties:
+        client.transport.sniff: true
+        client.transport.ping_timeout: 10s
+      cluster-name: alg-shift-es
+      cluster-nodes: 172.16.15.157:9301
+
+logging:
+  fileName: log4j2-dev.xml
+  config: classpath:${logging.fileName}
+
+config:
+  # 每秒生成 event 数
+  produce-per-second: 10
+  index-name: test1
+
+

@@ -1,0 +1,9 @@
+spring:
+  data:
+    elasticsearch:
+      # 感觉有点蛋疼. es 目前我没办法通过打洞的方式. 连接. 只好本地搭了个es用于测试
+      cluster-nodes: 127.0.0.1:9301
+      cluster-name: my-local
+
+
+
