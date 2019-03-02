@@ -40,6 +40,4 @@ public class IndexEventFactory implements EventFactory<EsIndexEvent> {
         }).collect(Collectors.toList());
         return new EsIndexEvent(indexQueries);
     }
-
-
 }

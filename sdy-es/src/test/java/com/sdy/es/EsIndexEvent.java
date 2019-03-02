@@ -1,5 +1,6 @@
 package com.sdy.es;
 
+import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
@@ -13,5 +14,5 @@ import java.util.List;
 @AllArgsConstructor
 public class EsIndexEvent {
 
-    private List<IndexQuery> indexQueries;
+    private List<IndexQuery> indexQueries = Lists.newArrayList();
 }
