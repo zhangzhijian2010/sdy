@@ -18,5 +18,5 @@ config:
   # 每秒生成 event 数
   produce-per-second: 32
   index-name: test1
-  core-size: 32
-  work-pool-size: 32
+  core-size: 64
+  work-pool-size: 64
