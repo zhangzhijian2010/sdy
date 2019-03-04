@@ -16,7 +16,10 @@ public class EsIndexEventProducer {
         this.ringBuffer = ringBuffer;
     }
 
-    private static final EventTranslatorOneArg<EsIndexEvent, List<IndexQuery>> TRANSLATOR = (event, sequence, bb) -> event.setIndexQueries(bb);
+    private static final EventTranslatorOneArg<EsIndexEvent, List<IndexQuery>> TRANSLATOR = (event, sequence, bb) -> {
+        event.setIndexQueries(bb);
+        event.setSize(bb.size());
+    };
 
     public void onData(List<IndexQuery> indexQueries) {
         ringBuffer.publishEvent(TRANSLATOR, indexQueries);

@@ -31,6 +31,10 @@ public class IndexEventFactory implements EventFactory<EsIndexEvent> {
 
     @Override
     public EsIndexEvent newInstance() {
+        return new EsIndexEvent();
+    }
+
+    public EsIndexEvent newInstance2() {
         List<IndexQuery> indexQueries = IntStream.range(0, size).mapToObj(value -> {
             IndexQuery index = new IndexQuery();
             index.setSource(JSON.toJSONString(EsIndex.create(G_CONTENT)));
@@ -38,6 +42,7 @@ public class IndexEventFactory implements EventFactory<EsIndexEvent> {
             index.setType(indexName);
             return index;
         }).collect(Collectors.toList());
-        return new EsIndexEvent(indexQueries);
+        return new EsIndexEvent(indexQueries, size);
+
     }
 }

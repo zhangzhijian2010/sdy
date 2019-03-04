@@ -1,9 +1,11 @@
 package com.sdy.es;
 
+import com.google.common.collect.Lists;
 import com.lmax.disruptor.EventFactory;
 import com.lmax.disruptor.YieldingWaitStrategy;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
+import com.sdy.es.config.ApplicationService;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.scheduling.concurrent.ThreadPoolExecutorFactoryBean;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -27,22 +30,32 @@ import java.util.stream.IntStream;
 public class InsertEsTests {
     @Autowired
     private SysConfig sysConfig;
-    @Autowired
-    private EsIndexEventHandler esIndexEventHandler;
+
 
     private Disruptor<EsIndexEvent> disruptor;
 
+    @Autowired
+    private ApplicationService applicationService;
+
     @Before
     public void init() {
+        log.info("sysConfig: {}", sysConfig.toString());
         EventFactory<EsIndexEvent> eventFactory = new IndexEventFactory(sysConfig.getIndexName(), 1000);
         ThreadPoolExecutorFactoryBean threadPoolFactory = new ThreadPoolExecutorFactoryBean();
+        threadPoolFactory.setThreadNamePrefix("xxxx-");
+        threadPoolFactory.getObject();
         threadPoolFactory.setCorePoolSize(sysConfig.getCoreSize());
         threadPoolFactory.setMaxPoolSize(sysConfig.getCoreSize());
-        int ringBufferSize = 8 * 1024; // RingBuffer 大小，必须是 2 的 N 次方；
+        int ringBufferSize = 4 * 1024; // RingBuffer 大小，必须是 2 的 N 次方；
         Disruptor<EsIndexEvent> disruptor = new Disruptor<>(eventFactory,
-                ringBufferSize, threadPoolFactory, ProducerType.SINGLE,
+                ringBufferSize, threadPoolFactory, ProducerType.MULTI,
                 new YieldingWaitStrategy());
-        disruptor.handleEventsWith(esIndexEventHandler);
+
+        List<EsWorkHandler> esWorkHandlers = Lists.newArrayList();
+        IntStream.range(0, sysConfig.getCoreSize()).forEach(i -> {
+            esWorkHandlers.add(applicationService.getBean(EsWorkHandler.class));
+        });
+        disruptor.handleEventsWithWorkerPool(esWorkHandlers.toArray(new EsWorkHandler[]{}));
         disruptor.start();
         this.disruptor = disruptor;
     }
@@ -55,11 +68,13 @@ public class InsertEsTests {
         new Timer(true).schedule(new TimerTask() {
             @Override
             public void run() {
+                long st = System.currentTimeMillis();
                 IntStream.range(0, sysConfig.getProducePerSecond()).forEach(i -> {
-                    producer.onData(eventFactory.newInstance().getIndexQueries());
+                    producer.onData(((IndexEventFactory) eventFactory).newInstance2().getIndexQueries());
                 });
+                log.info("create {}, cost: {}", sysConfig.getProducePerSecond() * 1000, System.currentTimeMillis() - st);
             }
-        }, 10l, 990l);
+        }, 10l, 500l);
         TimeUnit.HOURS.sleep(2l);
     }
 

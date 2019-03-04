@@ -17,6 +17,10 @@ public class SysConfig {
     private String indexName;
 
     private int coreSize;
+    /**
+     * 工作线程数
+     */
+    private int workPoolSize;
 
-    
+
 }
