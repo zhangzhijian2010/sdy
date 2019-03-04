@@ -1,6 +1,6 @@
 spring:
   profiles:
-    # dev, pro
+    # dev, test
     active: dev
   data:
     elasticsearch:
