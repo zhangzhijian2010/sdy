@@ -16,8 +16,7 @@ logging:
 
 config:
   # 每秒生成 event 数
-  produce-per-second: 30
+  produce-per-second: 64
   index-name: test1
   core-size: 64
   work-pool-size: 64
-
