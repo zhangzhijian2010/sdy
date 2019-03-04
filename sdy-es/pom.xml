@@ -99,7 +99,7 @@
                 <version>3.0.0-M3</version>
                 <configuration>
                     <argLine>
-                        -Xms5G -Xmx5G -XX:+UseG1GC
+                        -Xms10G -Xmx10G -XX:+UseG1GC
                         -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps
                         -Xloggc:/data/log/test.log
                     </argLine>
