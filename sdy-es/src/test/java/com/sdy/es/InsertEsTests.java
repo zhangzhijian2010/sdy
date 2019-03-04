@@ -48,7 +48,7 @@ public class InsertEsTests {
         threadPoolFactory.setMaxPoolSize(sysConfig.getCoreSize());
         int ringBufferSize = 2 * 1024; // RingBuffer 大小，必须是 2 的 N 次方；
         Disruptor<EsIndexEvent> disruptor = new Disruptor<>(eventFactory,
-                ringBufferSize, threadPoolFactory, ProducerType.MULTI,
+                ringBufferSize, threadPoolFactory, ProducerType.SINGLE,
                 new YieldingWaitStrategy());
 
         List<EsWorkHandler> esWorkHandlers = Lists.newArrayList();
