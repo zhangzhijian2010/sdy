@@ -21,8 +21,10 @@ public class EsWorkHandler implements WorkHandler<EsIndexEvent> {
     @Override
     public void onEvent(EsIndexEvent event) {
         long st = System.currentTimeMillis();
-        if (event.getSize() > 0) {
+        int size = event.getSize();
+        if (size > 0) {
             myEsTemplate.bulkIndexAndRetryCommitRejects(event.getIndexQueries(), false);
+            Counter.increase(size);
         }
         log.info("event: {}, cost: {} ms", event.getSize(), System.currentTimeMillis() - st);
     }

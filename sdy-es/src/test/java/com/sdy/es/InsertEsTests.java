@@ -46,7 +46,7 @@ public class InsertEsTests {
         threadPoolFactory.getObject();
         threadPoolFactory.setCorePoolSize(sysConfig.getCoreSize());
         threadPoolFactory.setMaxPoolSize(sysConfig.getCoreSize());
-        int ringBufferSize = 1024; // RingBuffer 大小，必须是 2 的 N 次方；
+        int ringBufferSize = 4 * 1024; // RingBuffer 大小，必须是 2 的 N 次方；
         Disruptor<EsIndexEvent> disruptor = new Disruptor<>(eventFactory,
                 ringBufferSize, threadPoolFactory, ProducerType.MULTI,
                 new YieldingWaitStrategy());
@@ -60,7 +60,6 @@ public class InsertEsTests {
         this.disruptor = disruptor;
     }
 
-
     @Test
     public void startProducer() throws InterruptedException {
         EsIndexEventProducer producer = new EsIndexEventProducer(disruptor.getRingBuffer());
@@ -69,12 +68,19 @@ public class InsertEsTests {
             @Override
             public void run() {
                 long st = System.currentTimeMillis();
-                IntStream.range(0, sysConfig.getProducePerSecond()).forEach(i -> {
-                    producer.onData(((IndexEventFactory) eventFactory).newInstance2().getIndexQueries());
-                });
+                IntStream.range(0, sysConfig.getProducePerSecond()).forEach(i -> producer.onData(((IndexEventFactory) eventFactory).newInstance2().getIndexQueries()));
                 log.info("create {}, cost: {}", sysConfig.getProducePerSecond() * 1000, System.currentTimeMillis() - st);
             }
-        }, 10l, 500l);
+        }, 10l, 1000l);
+
+        new Timer(true).schedule(new TimerTask() {
+            @Override
+            public void run() {
+                long insertEsSize = Counter.getAndDelGetCount();
+                log.warn("insert es size: {}", insertEsSize);
+            }
+        }, 5000l, 5000l);
+
         TimeUnit.HOURS.sleep(2l);
     }
 
