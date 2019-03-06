@@ -81,7 +81,7 @@ public class InsertEsTests {
             }
         }, 5000l, 5000l);
 
-        TimeUnit.HOURS.sleep(2l);
+        TimeUnit.HOURS.sleep(Long.parseLong(System.getProperty("execute-hour", "2")));
     }
 
 
