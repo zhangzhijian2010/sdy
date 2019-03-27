@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: dev
+
+logging:
+  fileName: log4j2-dev.xml
+  config: classpath:${logging.fileName}
+
+

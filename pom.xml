@@ -11,6 +11,7 @@
     <modules>
         <module>sty-normal</module>
         <module>sdy-es</module>
+        <module>sdy-webflux</module>
     </modules>
 
     <properties>
@@ -37,11 +38,12 @@
         <okhttp3.verson>3.11.0</okhttp3.verson>
 
         <!-- XXX consul-all 2.0.1.RELEASE 依赖 spring.boot 2.1.0.RELEASE  会出错 -->
-        <spring-cloud-consul.version>2.0.1.RELEASE</spring-cloud-consul.version>
-        <spring.boot.version>2.0.5.RELEASE</spring.boot.version>
-        <spring-kafka.version>2.1.10.RELEASE</spring-kafka.version>
-        <spring-cloud-starter-sleuth.version>2.0.2.RELEASE</spring-cloud-starter-sleuth.version>
-        <spring-cloud-starter-zipkin.version>2.0.2.RELEASE</spring-cloud-starter-zipkin.version>
+        <spring-cloud-consul.version>2.1.0.RELEASE</spring-cloud-consul.version>
+        <spring.boot.version>2.1.3.RELEASE</spring.boot.version>
+        <spring-kafka.version>2.2.4.RELEASE</spring-kafka.version>
+        <spring-cloud-starter-sleuth.version>2.1.1.RELEASE</spring-cloud-starter-sleuth.version>
+        <spring-cloud-starter-zipkin.version>2.1.1.RELEASE</spring-cloud-starter-zipkin.version>
+
 
         <!--很坑，升级到1.1.10 会报错 某个类spring boot 已不用 org.springframework.boot.bind.RelaxedDataBinder 这个类在spring boot 2.0.4.RELEASE 版本弃用了-->
         <druid.version>1.1.9</druid.version>
@@ -55,15 +57,16 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.5.RELEASE</version>
+        <version>2.1.3.RELEASE</version>
     </parent>
+
 
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Finchley.SR2</version>
+                <version>Greenwich.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -137,6 +140,12 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-jdbc</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-webflux</artifactId>
                 <version>${spring.boot.version}</version>
             </dependency>
 

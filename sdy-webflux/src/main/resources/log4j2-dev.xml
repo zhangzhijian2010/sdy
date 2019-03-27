@@ -1,0 +1,36 @@
+<configuration>
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%highlight{%d{yyyy-MM-dd HH:mm:ss.SSS} #| %p #| %t #| %c{1.}:%L #| %m}%n"
+                           charset="utf-8"/>
+        </Console>
+
+        <RollingFile name="info" fileName="${sys:logDir}/info.log"
+                     filePattern="${sys:logDir}/history/info-%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="%highlight{%d{yyyy-MM-dd HH:mm:ss.SSS} #| %p #| %t #| %c{1.}:%L #| %m}%n"
+                           charset="utf-8"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="error" fileName="${sys:logDir}/error.log"
+                     filePattern="${sys:logDir}/history/error-%d{yyyy-MM-dd}.log.gz">
+            <ThresholdFilter level="ERROR" onMatch="NEUTRAL" onMismatch="DENY"/>
+            <PatternLayout pattern="%highlight{%d{yyyy-MM-dd HH:mm:ss.SSS} #| %p #| %t #| %c{1.}:%L #| %m}%n"
+                           charset="utf-8"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+    </appenders>
+
+    <loggers>
+        <AsyncRoot level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+        </AsyncRoot>
+
+
+    </loggers>
+</configuration>
+
