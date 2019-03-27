@@ -52,6 +52,8 @@
         <!-- log4j2 版本 -->
         <log4j2.version>2.11.1</log4j2.version>
         <disruptor.version>3.4.2</disruptor.version>
+
+        <rxjava.version>2.2.7</rxjava.version>
     </properties>
 
     <parent>
@@ -352,6 +354,12 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
                 <version>${spring.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.reactivex.rxjava2</groupId>
+                <artifactId>rxjava</artifactId>
+                <version>${rxjava.version}</version>
             </dependency>
 
         </dependencies>
