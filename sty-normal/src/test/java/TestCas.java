@@ -46,4 +46,9 @@ public class TestCas {
         System.out.println("Loop times:" + (System.currentTimeMillis() - marked) + "ms");
 
     }
+
+    @Test
+    public void test3() {
+        String s = "2019-03-00 22:25:33";
+    }
 }
