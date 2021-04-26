@@ -34,7 +34,7 @@
         <mybatis-spring-boot-starter.version>1.3.2</mybatis-spring-boot-starter.version>
         <mysql-connector-java.version>8.0.12</mysql-connector-java.version>
         <commons-collections4.version>4.2</commons-collections4.version>
-        <commons-io.version>2.6</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <caffeine.version>2.6.2</caffeine.version>
         <okhttp3.verson>3.11.0</okhttp3.verson>
 
