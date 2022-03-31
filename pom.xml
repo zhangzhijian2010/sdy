@@ -40,7 +40,7 @@
 
         <!-- XXX consul-all 2.0.1.RELEASE 依赖 spring.boot 2.1.0.RELEASE  会出错 -->
         <spring-cloud-consul.version>2.1.0.RELEASE</spring-cloud-consul.version>
-        <spring.boot.version>2.1.3.RELEASE</spring.boot.version>
+        <spring.boot.version>2.5.12</spring.boot.version>
         <spring-kafka.version>2.2.4.RELEASE</spring-kafka.version>
         <spring-cloud-starter-sleuth.version>2.1.1.RELEASE</spring-cloud-starter-sleuth.version>
         <spring-cloud-starter-zipkin.version>2.1.1.RELEASE</spring-cloud-starter-zipkin.version>
