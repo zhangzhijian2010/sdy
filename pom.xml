@@ -23,7 +23,7 @@
         <springfox.version>2.9.2</springfox.version>
         <jedis.version>2.9.0</jedis.version>
 
-        <fastjson.version>1.2.56</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <commons-lang3.version>3.8</commons-lang3.version>
         <jack-json.version>1.9.13</jack-json.version>
         <zookeeper.version>3.4.6</zookeeper.version>
